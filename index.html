@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="L1nkUp · Connecting people, one message at a time. A new era of intelligent, emotional messaging. Private beta opens 2026." />
 <meta property="og:title" content="L1nkUp — The next era of connection" />
-<meta property="og:description" content="Private preview · 2026" />
+<meta property="og:description" content="Live · 2026" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -651,7 +651,7 @@
     <div class="footer-center">
       <span class="label">SYS_TIME</span>
       <span class="value" id="utc-clock">—</span>
-      <span class="label">UTC</span>
+      <span class="label">LONDON</span>
     </div>
     <div class="footer-right">
       <a href="#" class="social-icon" aria-label="Twitter">
@@ -756,21 +756,28 @@
 
   function updateClock() {
     const now = new Date();
-    const h = String(now.getUTCHours()).padStart(2, '0');
-    const m = String(now.getUTCMinutes()).padStart(2, '0');
-    const s = String(now.getUTCSeconds()).padStart(2, '0');
-    document.getElementById('utc-clock').textContent = `${h}:${m}:${s}`;
-  }
-  updateClock();
-  setInterval(updateClock, 1000);
 
-  document.getElementById('email-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.innerHTML = '<span>✓ You\'re on the list</span>';
-    btn.style.background = 'linear-gradient(135deg, #5ff5ee, #39d5d0)';
-    e.target.querySelector('input').value = '';
-  });
+    const londonTime = now.toLocaleTimeString('en-GB', {
+        timeZone: 'Europe/London',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+
+    document.getElementById('utc-clock').textContent = londonTime;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+  document.getElementById('email-form').addEventListener('submit', () => {
+    const btn = document.querySelector('#email-form button');
+
+    setTimeout(() => {
+        btn.innerHTML = '<span>✓ You\'re on the list</span>';
+    }, 1000);
+});
 </script>
 
 </body>
